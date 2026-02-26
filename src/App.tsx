@@ -4,7 +4,6 @@ import { io, Socket } from "socket.io-client";
 import { RoomState, User } from "./types";
 import { JoinRoom } from "./components/JoinRoom";
 import { Room } from "./components/Room";
-import { ImageEditor } from "./components/ImageEditor";
 import { Layout } from "./components/Layout";
 
 let socket: Socket | null = null;
@@ -131,7 +130,6 @@ export default function App() {
           onDelete={handleDeleteRoom}
         />
       )}
-      <ImageEditor />
     </Layout>
   );
 }
