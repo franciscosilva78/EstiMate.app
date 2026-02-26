@@ -24,7 +24,13 @@ export default function App() {
 
   useEffect(() => {
     if (roomId && user && !socket) {
-      socket = io();
+      // Configuração otimizada para furar firewalls corporativos
+      socket = io({
+        transports: ["polling", "websocket"], // Força o polling inicial (HTTP normal) que firewalls aceitam
+        reconnectionAttempts: Infinity,
+        reconnectionDelay: 1000,
+        timeout: 20000
+      });
 
       socket.on("connect", () => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -90,19 +96,19 @@ export default function App() {
   return (
     <Layout>
       {!roomId ? (
-        <div className="flex flex-col items-center justify-center min-h-[60vh]">
-          <div className="w-full max-w-md p-8 rounded-3xl bg-slate-900/50 border border-white/10 shadow-[0_0_40px_-10px_rgba(168,85,247,0.2)] backdrop-blur-sm">
-            <h1 className="text-4xl font-bold mb-8 text-center bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+        <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
+          <div className="w-full max-w-md p-6 sm:p-8 rounded-3xl bg-slate-900/50 border border-white/10 shadow-[0_0_40px_-10px_rgba(168,85,247,0.2)] backdrop-blur-sm">
+            <h1 className="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8 text-center bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
               Criar Sala
             </h1>
-            <form onSubmit={handleCreateRoom} className="space-y-6">
+            <form onSubmit={handleCreateRoom} className="space-y-4 sm:space-y-6">
               <div>
-                <label className="block text-sm font-bold text-slate-300 mb-2 uppercase tracking-wider">Nome da Sala</label>
+                <label className="block text-xs sm:text-sm font-bold text-slate-300 mb-2 uppercase tracking-wider">Nome da Sala</label>
                 <input
                   type="text"
                   value={roomNameInput}
                   onChange={(e) => setRoomNameInput(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-white/10 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition-all text-white placeholder-slate-600 font-medium"
+                  className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-white/10 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition-all text-white placeholder-slate-600 font-medium text-sm sm:text-base"
                   placeholder="ex: Planejamento Sprint 42"
                   required
                   autoFocus
@@ -111,7 +117,7 @@ export default function App() {
               <button
                 type="submit"
                 disabled={!roomNameInput.trim()}
-                className="w-full py-4 bg-gradient-to-r from-cyan-500 to-purple-600 text-white rounded-xl font-bold text-lg shadow-[0_0_20px_-5px_rgba(168,85,247,0.5)] hover:shadow-[0_0_30px_-5px_rgba(168,85,247,0.6)] disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:scale-[1.02]"
+                className="w-full py-3.5 sm:py-4 bg-gradient-to-r from-cyan-500 to-purple-600 text-white rounded-xl font-bold text-base sm:text-lg shadow-[0_0_20px_-5px_rgba(168,85,247,0.5)] hover:shadow-[0_0_30px_-5px_rgba(168,85,247,0.6)] disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:scale-[1.02]"
               >
                 Iniciar Sala
               </button>
