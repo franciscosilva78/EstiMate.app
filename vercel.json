@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/socket.io/:path*",
+      "destination": "https://estimate-app-jfnc.onrender.com/socket.io/:path*"
+    }
+  ]
+}
