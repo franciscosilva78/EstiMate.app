@@ -28,8 +28,7 @@ async function startServer() {
   const io = new SocketIOServer(server, {
     cors: {
       origin: "*",
-      methods: ["GET", "POST"],
-      credentials: true
+      methods: ["GET", "POST"]
     },
   });
 
