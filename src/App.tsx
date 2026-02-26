@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import { useEffect, useState, FormEvent } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { io, Socket } from "socket.io-client";
@@ -25,7 +26,8 @@ export default function App() {
   useEffect(() => {
     if (roomId && user && !socket) {
       // Configuração otimizada para furar firewalls corporativos
-      socket = io({
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || undefined;
+      socket = io(backendUrl, {
         transports: ["polling", "websocket"], // Força o polling inicial (HTTP normal) que firewalls aceitam
         reconnectionAttempts: Infinity,
         reconnectionDelay: 1000,
