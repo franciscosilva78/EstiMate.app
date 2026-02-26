@@ -26,7 +26,9 @@ export default function App() {
   useEffect(() => {
     if (roomId && user && !socket) {
       // Configuração otimizada para furar firewalls corporativos
-      const backendUrl = import.meta.env.VITE_BACKEND_URL || undefined;
+      // Usa a variável de ambiente se existir, senão usa a URL fixa do Render
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || "https://estimate-app-jfnc.onrender.com";
+      
       socket = io(backendUrl, {
         transports: ["polling", "websocket"], // Força o polling inicial (HTTP normal) que firewalls aceitam
         reconnectionAttempts: Infinity,
