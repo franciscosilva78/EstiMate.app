@@ -9,7 +9,7 @@ export function Layout({ children }: { children: ReactNode }) {
           EstiMate
         </h1>
       </header>
-      <main className="max-w-5xl mx-auto p-6">{children}</main>
+      <main className="max-w-5xl mx-auto p-4 sm:p-6">{children}</main>
     </div>
   );
 }
