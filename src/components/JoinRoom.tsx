@@ -34,7 +34,7 @@ export function JoinRoom({ onJoin }: JoinRoomProps) {
           />
         </div>
         <div>
-          <label className="block text-xs sm:text-sm font-bold text-slate-300 mb-2 uppercase tracking-wider">Selecione o Papel</label>
+          <label className="block text-xs sm:text-sm font-bold text-slate-300 mb-2 uppercase tracking-wider">Selecione sua Função</label>
           <div className="flex gap-3 sm:gap-4">
             <label className="flex-1 cursor-pointer">
               <input
