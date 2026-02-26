@@ -33,7 +33,11 @@ export default function App() {
         transports: ["polling", "websocket"], // Força o polling inicial (HTTP normal) que firewalls aceitam
         reconnectionAttempts: Infinity,
         reconnectionDelay: 1000,
-        timeout: 20000
+        timeout: 60000 // 60 segundos para dar tempo do servidor gratuito do Render "acordar"
+      });
+
+      socket.on("connect_error", (err) => {
+        console.error("Erro de conexão com o servidor:", err.message);
       });
 
       socket.on("connect", () => {
