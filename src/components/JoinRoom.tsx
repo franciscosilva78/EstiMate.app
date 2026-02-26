@@ -16,26 +16,26 @@ export function JoinRoom({ onJoin }: JoinRoomProps) {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-20 p-8 rounded-3xl bg-slate-900/50 border border-white/10 shadow-[0_0_40px_-10px_rgba(34,211,238,0.2)] backdrop-blur-sm">
-      <h2 className="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+    <div className="max-w-md mx-auto mt-10 sm:mt-20 p-6 sm:p-8 rounded-3xl bg-slate-900/50 border border-white/10 shadow-[0_0_40px_-10px_rgba(34,211,238,0.2)] backdrop-blur-sm">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
         Entrar na Sessão
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
         <div>
-          <label className="block text-sm font-bold text-slate-300 mb-2 uppercase tracking-wider">Seu Nome</label>
+          <label className="block text-xs sm:text-sm font-bold text-slate-300 mb-2 uppercase tracking-wider">Seu Nome</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-white/10 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition-all text-white placeholder-slate-600 font-medium"
+            className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-white/10 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition-all text-white placeholder-slate-600 font-medium text-sm sm:text-base"
             placeholder="Digite seu nome"
             required
             autoFocus
           />
         </div>
         <div>
-          <label className="block text-sm font-bold text-slate-300 mb-2 uppercase tracking-wider">Selecione o Papel</label>
-          <div className="flex gap-4">
+          <label className="block text-xs sm:text-sm font-bold text-slate-300 mb-2 uppercase tracking-wider">Selecione o Papel</label>
+          <div className="flex gap-3 sm:gap-4">
             <label className="flex-1 cursor-pointer">
               <input
                 type="radio"
@@ -45,7 +45,7 @@ export function JoinRoom({ onJoin }: JoinRoomProps) {
                 onChange={() => setRole("Dev")}
                 className="peer sr-only"
               />
-              <div className="text-center px-4 py-3 rounded-xl bg-slate-950 border border-white/10 peer-checked:border-cyan-500 peer-checked:bg-cyan-500/10 peer-checked:text-cyan-400 peer-checked:shadow-[0_0_15px_-3px_rgba(34,211,238,0.3)] font-bold transition-all">
+              <div className="text-center px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-slate-950 border border-white/10 peer-checked:border-cyan-500 peer-checked:bg-cyan-500/10 peer-checked:text-cyan-400 peer-checked:shadow-[0_0_15px_-3px_rgba(34,211,238,0.3)] font-bold transition-all text-xs sm:text-sm">
                 DEV
               </div>
             </label>
@@ -58,7 +58,7 @@ export function JoinRoom({ onJoin }: JoinRoomProps) {
                 onChange={() => setRole("QA")}
                 className="peer sr-only"
               />
-              <div className="text-center px-4 py-3 rounded-xl bg-slate-950 border border-white/10 peer-checked:border-purple-500 peer-checked:bg-purple-500/10 peer-checked:text-purple-400 peer-checked:shadow-[0_0_15px_-3px_rgba(168,85,247,0.3)] font-bold transition-all">
+              <div className="text-center px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-slate-950 border border-white/10 peer-checked:border-purple-500 peer-checked:bg-purple-500/10 peer-checked:text-purple-400 peer-checked:shadow-[0_0_15px_-3px_rgba(168,85,247,0.3)] font-bold transition-all text-xs sm:text-sm">
                 QA
               </div>
             </label>
@@ -67,7 +67,7 @@ export function JoinRoom({ onJoin }: JoinRoomProps) {
         <button
           type="submit"
           disabled={!name.trim()}
-          className="w-full py-4 bg-gradient-to-r from-cyan-500 to-purple-600 text-white rounded-xl font-bold text-lg shadow-[0_0_20px_-5px_rgba(34,211,238,0.4)] hover:shadow-[0_0_30px_-5px_rgba(34,211,238,0.6)] disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:scale-[1.02]"
+          className="w-full py-3.5 sm:py-4 bg-gradient-to-r from-cyan-500 to-purple-600 text-white rounded-xl font-bold text-base sm:text-lg shadow-[0_0_20px_-5px_rgba(34,211,238,0.4)] hover:shadow-[0_0_30px_-5px_rgba(34,211,238,0.6)] disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:scale-[1.02]"
         >
           Entrar na Sala
         </button>
