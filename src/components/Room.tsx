@@ -18,9 +18,12 @@ export function Room({ roomState, currentUser, onVote, onReveal, onReset, onDele
 
   if (!roomState) {
     return (
-      <div className="flex flex-col items-center justify-center py-32 space-y-4">
+      <div className="flex flex-col items-center justify-center py-32 space-y-4 px-4 text-center">
         <div className="w-12 h-12 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin"></div>
         <div className="text-cyan-400 font-bold tracking-widest uppercase text-sm animate-pulse">Estabelecendo Conexão...</div>
+        <p className="text-slate-500 text-xs mt-4 max-w-xs">
+          O servidor pode levar até 50 segundos para "acordar" caso seja o primeiro acesso do dia.
+        </p>
       </div>
     );
   }
