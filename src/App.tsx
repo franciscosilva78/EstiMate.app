@@ -26,11 +26,13 @@ export default function App() {
   useEffect(() => {
     if (roomId && user && !socket) {
       // Configuração otimizada para furar firewalls corporativos
-      // Usa a variável de ambiente se existir, senão usa a URL fixa do Render
-      const backendUrl = import.meta.env.VITE_BACKEND_URL || "https://estimate-app-jfnc.onrender.com";
+      // Se estiver rodando na Vercel, conecta no próprio domínio (que fará proxy pro Render)
+      const isVercel = window.location.hostname.includes('vercel.app');
+      const backendUrl = isVercel ? undefined : (import.meta.env.VITE_BACKEND_URL || "https://estimate-app-jfnc.onrender.com");
       
       socket = io(backendUrl, {
-        transports: ["polling", "websocket"], // Força o polling inicial (HTTP normal) que firewalls aceitam
+        // Vercel não suporta WebSockets no proxy, então forçamos apenas polling se estiver lá
+        transports: isVercel ? ["polling"] : ["polling", "websocket"],
         reconnectionAttempts: Infinity,
         reconnectionDelay: 1000,
         timeout: 60000 // 60 segundos para dar tempo do servidor gratuito do Render "acordar"
