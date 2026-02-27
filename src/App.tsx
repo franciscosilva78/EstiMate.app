@@ -26,8 +26,8 @@ export default function App() {
   useEffect(() => {
     if (roomId && user && !socket) {
       // Configuração otimizada para furar firewalls corporativos
-      // Força a conexão direta com o Render, independente de onde o frontend esteja hospedado
-      const backendUrl = import.meta.env.VITE_BACKEND_URL || "https://estimate-app-jfnc.onrender.com";
+      // Se VITE_BACKEND_URL existir (ex: Vercel), usa ele. Senão, conecta no próprio domínio (undefined)
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || undefined;
       
       socket = io(backendUrl, {
         transports: ["polling", "websocket"], // Tenta polling primeiro para furar firewalls
