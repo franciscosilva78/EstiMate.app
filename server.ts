@@ -3,6 +3,8 @@ import { createServer as createViteServer } from "vite";
 import { Server as SocketIOServer } from "socket.io";
 import http from "http";
 import { v4 as uuidv4 } from "uuid";
+import path from "path";
+import helmet from "helmet";
 
 interface User {
   id: string;
@@ -24,9 +26,25 @@ async function startServer() {
   const app = express();
   const PORT = 3000;
   const server = http.createServer(app);
+
+  // Security headers with Helmet
+  app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+          "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+          "connect-src": ["'self'", "wss://*.onrender.com", "https://*.onrender.com", "wss://estimae-app.com.br", "https://estimae-app.com.br"],
+        },
+      },
+      crossOriginEmbedderPolicy: false,
+    })
+  );
+
   const io = new SocketIOServer(server, {
     cors: {
       origin: "*",
+      methods: ["GET", "POST"]
     },
   });
 
@@ -35,56 +53,6 @@ async function startServer() {
   // API routes
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok" });
-  });
-
-  app.post("/api/edit-image", async (req, res) => {
-    try {
-      const { GoogleGenAI } = await import("@google/genai");
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-      const { image, prompt } = req.body;
-
-      if (!image || !prompt) {
-        return res.status(400).json({ error: "Missing image or prompt" });
-      }
-
-      const mimeType = image.match(/data:(.*?);base64,/)?.[1] || "image/png";
-      const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
-
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash-image',
-        contents: {
-          parts: [
-            {
-              inlineData: {
-                data: base64Data,
-                mimeType: mimeType,
-              },
-            },
-            {
-              text: prompt,
-            },
-          ],
-        },
-      });
-
-      let imageUrl = null;
-      for (const part of response.candidates[0].content.parts) {
-        if (part.inlineData) {
-          const base64EncodeString = part.inlineData.data;
-          imageUrl = `data:image/png;base64,${base64EncodeString}`;
-          break;
-        }
-      }
-
-      if (imageUrl) {
-        res.json({ imageUrl });
-      } else {
-        res.status(500).json({ error: "Failed to generate image" });
-      }
-    } catch (error: any) {
-      console.error("Error editing image:", error);
-      res.status(500).json({ error: error.message || "Internal server error" });
-    }
   });
 
   io.on("connection", (socket) => {
@@ -157,6 +125,9 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     app.use(express.static("dist"));
+    app.get("*", (req, res) => {
+      res.sendFile(path.resolve("dist", "index.html"));
+    });
   }
 
   server.listen(PORT, "0.0.0.0", () => {
